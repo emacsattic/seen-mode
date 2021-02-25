@@ -4,9 +4,10 @@
 
 ;; Author: Filipe da Silva Santos <contact@shiori.com.br>
 ;; Created: 25 Feb 2021
+;; Version: 0.3.0
 ;; Keywords: languages
 ;; Homepage: https://git.sr.ht/~shiorid/seen.el
-;; Package-Requires: ((emacs "25.1"))
+;; Package-Requires: ((emacs "24.4"))
 
 ;;; Commentary:
 
@@ -95,8 +96,7 @@ Used by 'font-lock-defaults'.")
     (,(regexp-opt seen-controlflow)  . font-lock-builtin-face)
     (,(regexp-opt seen-datatypes) . font-lock-keyword-face)
     (,(regexp-opt seen-functions) . font-lock-function-name-face)
-    (,(regexp-opt seen-keywords)  . font-lock-keyword-face)
-    ))
+    (,(regexp-opt seen-keywords)  . font-lock-keyword-face)))
 
 ;;;###autoload
 (define-derived-mode seen-mode fundamental-mode "seen-mode"
