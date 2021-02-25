@@ -29,31 +29,41 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Code:
-(setq seen-font-lock-keywords
-      (let* ((seen-datatypes '("bit" "bit2" "bit4" "byte" "int" "str"))
-	     (seen-keywords  '("case" "ecase" "else" "for" "if" "of" "other"
-			       "repeat" "till" "while"))
-	     (seen-controlflow '("farcall" "farcall_with" "gosub" "gosub_case"
-				 "gosub_if" "gosub_on" "gosub_unless" "goto"
-				 "goto_case" "goto_if" "goto_on" "goto_unless" "jump"
-				 "ret" "ret_with" "rtl" "rtl_with"))
+(defvar seen-datatypes
+  '("bit" "bit2" "bit4" "byte" "int" "str"))
 
-	     (seen-datatypes-regexp   (regexp-opt seen-datatypes 'words))
-	     (seen-keywords-regexp    (regexp-opt seen-keywords  'words))
-	     (seen-controlflow-regexp (regexp-opt seen-controlflow 'words)))
+(defvar seen-keywords
+  '("case" "ecase" "else" "for" "if" "of" "other" "repeat" "till" "while"))
 
-	`((,seen-datatypes-regexp   . font-lock-type-face)
-	  (,seen-keywords-regexp    . font-lock-type-face)
-	  (,seen-controlflow-regexp . font-lock-type-face))))
+(defvar seen-controlflow
+  '("farcall" "farcall_with" "gosub" "gosub_case" "gosub_if" "gosub_on"
+    "gosub_unless" "goto" "goto_case" "goto_if" "goto_on" "goto_unless" "jump"
+    "pause ""ret" "ret_with" "rtl" "rtl_with"))
+
+(defvar seen-functions
+  '("bgmLoop" "grpBuffer" "grpMulti" "objBgClear" "objBgMove" "objBgOfFile"
+    "op" "recOpenBg" "title"))
+
+(defvar seen-font-lock-defaults
+  `((("\'\\.\\*\\?" . font-lock-string-face)
+     ("^\\(#.*\\)$" . font-lock-preprocessor-face)
+     ("\\(@[^ \t\n:;]+\\)" . font-lock-function-name-face)
+     ("\\(int[A-Z]\\[[0-9]+\\]\\)" . font-lock-variable-name-face)
+     ("\\(str[A-Z]\\[[0-9]+\\]\\)" . font-lock-variable-name-face)
+     ( ,(regexp-opt seen-keywords    'words) . font-lock-keyword-face)
+     ( ,(regexp-opt seen-controlflow 'words) . font-lock-builtin-face)
+     ( ,(regexp-opt seen-functions   'words) . font-lock-function-name-face)
+     )))
 
 ;;;###autoload
-(define-derived-mode seen-mode c-mode "seen-mode"
+(define-derived-mode seen-mode fundamental-mode "seen-mode"
   "Major mode for editing text/kepago scripts"
-  (setq font-lock-defaults '(seen-font-lock-keywords))
+  (setq font-lock-defaults seen-font-lock-defaults)
   (visual-line-mode 1))
 
 ;;;###autoload
 (progn
-  (add-to-list 'auto-mode-alist '("SEEN\\[.TXT]")))
+  (add-to-list 'auto-mode-alist '("\\.TXT$" . seen-mode)))
 
 (provide 'seen-mode)
+;;; seen-mode.el ends here
