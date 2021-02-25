@@ -54,6 +54,6 @@
 
 ;;;###autoload
 (progn
-  (add-to-list 'auto-mode-alist '("\\.TXT")))
+  (add-to-list 'auto-mode-alist '("SEEN\\[.TXT]")))
 
 (provide 'seen-mode)
