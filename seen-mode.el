@@ -29,41 +29,86 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Code:
-(defvar seen-datatypes
-  '("bit" "bit2" "bit4" "byte" "int" "str"))
+(require 'cl-lib)
 
-(defvar seen-keywords
-  '("case" "ecase" "else" "for" "if" "of" "other" "repeat" "till" "while"))
+(defcustom seen-mode-hook 'turn-on-visual-line-mode
+  "Basic hook for wrapping lines when on seen-mode."
+  :type 'hook
+  :options '(turn-on-visual-line-mode)
+  :group 'seen-mode)
 
-(defvar seen-controlflow
+(defconst seen-regex-preprocessor
+  "^\\(#.*\\)$"
+  "Regular expression for matching preprocessor instructions.
+Used by 'font-lock-defaults'.")
+
+(defconst seen-regex-function
+  "\\(@[^ \t\n:;]+\\)"
+  "Regular expression for matching function names e.g. objBgClear.
+Used by 'font-lock-defaults'.")
+
+(defconst seen-regex-intx
+  "\\(int[A-Z]\\[[0-9]+\\]\\)"
+  "Regular expression for matching `int` declarations e.g. intF[3].
+Used by 'font-lock-defaults'.")
+
+(defconst seen-regex-strx
+  "\\(str[A-Z]\\[[0-9]+\\]\\)"
+  "Regular expression for matching `string` declarations e.g. strF[1000].
+Used by 'font-lock-defaults'.")
+
+(defconst seen-regex-string
+  "\'\\(.*\\)\'"
+  "Regular expression for mathing `string` blocks.
+Used by 'font-lock-defaults'.")
+
+(defconst seen-controlflow
   '("farcall" "farcall_with" "gosub" "gosub_case" "gosub_if" "gosub_on"
     "gosub_unless" "goto" "goto_case" "goto_if" "goto_on" "goto_unless" "jump"
-    "pause ""ret" "ret_with" "rtl" "rtl_with"))
+    "pause" "ret" "ret_with" "rtl" "rtl_with")
+  "Reserved words for control flow.
+Used by 'font-lock-defaults'.")
 
-(defvar seen-functions
+(defconst seen-datatypes
+  '("bit" "bit2" "bit4" "byte" "int" "str")
+  "Reserved words for datatypes.
+Used by 'font-lock-defaults'.")
+
+(defconst seen-functions
   '("bgmLoop" "grpBuffer" "grpMulti" "objBgClear" "objBgMove" "objBgOfFile"
-    "op" "recOpenBg" "title"))
+    "op" "recOpenBg" "title")
+  "Reserved words for functions.
+Used by 'font-lock-defaults'.")
 
-(defvar seen-font-lock-defaults
-  `((("\'\\.\\*\\?" . font-lock-string-face)
-     ("^\\(#.*\\)$" . font-lock-preprocessor-face)
-     ("\\(@[^ \t\n:;]+\\)" . font-lock-function-name-face)
-     ("\\(int[A-Z]\\[[0-9]+\\]\\)" . font-lock-variable-name-face)
-     ("\\(str[A-Z]\\[[0-9]+\\]\\)" . font-lock-variable-name-face)
-     ( ,(regexp-opt seen-keywords    'words) . font-lock-keyword-face)
-     ( ,(regexp-opt seen-controlflow 'words) . font-lock-builtin-face)
-     ( ,(regexp-opt seen-functions   'words) . font-lock-function-name-face)
-     )))
+(defconst seen-keywords
+  '("case" "ecase" "else" "for" "if" "of" "other" "repeat" "till" "while")
+  "Reserved keywords.
+Used by 'font-lock-defaults'.")
+
+(defvar seen-font-lock
+  `((,seen-regex-preprocessor . font-lock-string-face)
+    (,seen-regex-function . font-lock-function-name-face)
+    (,seen-regex-intx . font-lock-variable-name-face)
+    (,seen-regex-strx . font-lock-variable-name-face)
+    (,seen-regex-string . font-lock-string-face)
+    
+    (,(regexp-opt seen-controlflow)  . font-lock-builtin-face)
+    (,(regexp-opt seen-datatypes) . font-lock-keyword-face)
+    (,(regexp-opt seen-functions) . font-lock-function-name-face)
+    (,(regexp-opt seen-keywords)  . font-lock-keyword-face)
+    ))
 
 ;;;###autoload
 (define-derived-mode seen-mode fundamental-mode "seen-mode"
   "Major mode for editing text/kepago scripts"
-  (setq font-lock-defaults seen-font-lock-defaults)
-  (visual-line-mode 1))
+  (setq font-lock-defaults '(seen-font-lock))
+  (visual-line-mode 1)
+  (run-hooks 'seen-mode-hook))
 
 ;;;###autoload
 (progn
   (add-to-list 'auto-mode-alist '("\\.TXT$" . seen-mode)))
 
 (provide 'seen-mode)
+
 ;;; seen-mode.el ends here
