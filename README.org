@@ -2,8 +2,13 @@
 #+author: Filipe da Silva Santos
 #+date: <2021-02-25 Thu>
 
-A simple  syntax-highlighting mode for text/kepago
+* seen.el
+  A simple syntax-highlighting mode for text/kepago
+
+#+begin_src
                                  _ 
  ___ ___  ___  _ _          ___ | |
 (_-// -_)/ -_)| ' \   _    / -_)| |
 /__/\___|\___||_||_| (_)   \___||_|
+
+#+end_src
