@@ -33,7 +33,7 @@
 (require 'cl-lib)
 
 (defcustom seen-mode-hook 'turn-on-visual-line-mode
-  "Basic hook for wrapping lines when on seen-mode."
+  "Basic hook for wrapping lines when on `seen-mode'."
   :type 'hook
   :options '(turn-on-visual-line-mode)
   :group 'seen-mode)
@@ -106,7 +106,7 @@ Used by 'font-lock-defaults'.")
   (run-hooks 'seen-mode-hook))
 
 ;;;###autoload
-(add-to-list 'auto-mode-alist '("\\.ke$" . seen-mode))
+(add-to-list 'auto-mode-alist '("\\.ke\\'" . seen-mode))
 
 (provide 'seen-mode)
 
