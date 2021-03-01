@@ -1,4 +1,4 @@
-;;; seen.el --- A syntax highlighting package for text/kepago -*- lexical-binding: t; -*-
+;;; seen-mode.el --- A syntax highlighting package for text/kepago -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2021 Filipe da Silva Santos
 
@@ -8,11 +8,6 @@
 ;; Keywords: languages
 ;; Homepage: https://git.sr.ht/~shiorid/seen.el
 ;; Package-Requires: ((emacs "24.4"))
-
-;;; Commentary:
-
-;; This package provides a major mode for editing text/kepago files.
-;; I hope it helps future VN translators and developers.
 
 ;; This file is not part of GNU Emacs.
 
@@ -28,6 +23,11 @@
 
 ;; You should have received a copy of the GNU Affero General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; This package provides a major mode for editing text/kepago files.
+;; I hope it helps future VN translators and developers.
 
 ;;; Code:
 (require 'cl-lib)
@@ -106,8 +106,7 @@ Used by 'font-lock-defaults'.")
   (run-hooks 'seen-mode-hook))
 
 ;;;###autoload
-(progn
-  (add-to-list 'auto-mode-alist '("\\.TXT$" . seen-mode)))
+(add-to-list 'auto-mode-alist '("\\.ke$" . seen-mode))
 
 (provide 'seen-mode)
 
