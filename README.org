@@ -5,6 +5,8 @@
 * seen.el
   A simple syntax-highlighting mode for text/kepago
 
+[[https://melpa.org/#/seen-mode][file:https://melpa.org/packages/seen-mode-badge.svg]]
+  
 #+begin_src
                                  _ 
  ___ ___  ___  _ _          ___ | |

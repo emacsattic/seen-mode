@@ -1,12 +1,14 @@
-- [seen.el](#orgbce00c6)
+- [seen.el](#org19db1cd)
 
 
 
-<a id="orgbce00c6"></a>
+<a id="org19db1cd"></a>
 
 # seen.el
 
 A simple syntax-highlighting mode for text/kepago
+
+[![MELPA](https://melpa.org/packages/seen-mode-badge.svg)](https://melpa.org/#/seen-mode)
 
 ```
 				 _ 

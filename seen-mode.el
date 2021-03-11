@@ -59,7 +59,7 @@ Used by 'font-lock-defaults'.")
 Used by 'font-lock-defaults'.")
 
 (defconst seen-regex-string
-  "\'\\(.*\\)\'"
+  "'\\(.*\\)'"
   "Regular expression for mathing `string` blocks.
 Used by 'font-lock-defaults'.")
 
@@ -99,7 +99,7 @@ Used by 'font-lock-defaults'.")
     (,(regexp-opt seen-keywords)  . font-lock-keyword-face)))
 
 ;;;###autoload
-(define-derived-mode seen-mode fundamental-mode "seen-mode"
+(define-derived-mode seen-mode prog-mode "seen-mode"
   "Major mode for editing text/kepago scripts"
   (setq font-lock-defaults '(seen-font-lock))
   (visual-line-mode 1)
